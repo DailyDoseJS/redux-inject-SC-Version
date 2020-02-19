@@ -2,16 +2,16 @@
 
 :: BatchAdminRechte
 :-------------------------------------
-REM  --> Check for Adminrights.
+REM  --> Check for adminrights
     IF "%PROCESSOR_ARCHITECTURE%" EQU "amd64" (
 >nul 2>&1 "%SYSTEMROOT%\SysWOW64\cacls.exe" "%SYSTEMROOT%\SysWOW64\config\system"
 ) ELSE (
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 )
 
-REM --> If error flag no Adminrights.
+REM --> If error is set, we have no admin rights.
 if '%errorlevel%' NEQ '0' (
-    echo Requesting administrative privileges...
+    echo Fordere Adminrechte an...
     goto UACPrompt
 ) else ( goto gotAdmin )
 
@@ -29,9 +29,12 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0"
 :--------------------------------------    
 
-Start C:\PATH\TO\altv.exe
+Start C:\PATH\TO\altv.exe 
+REM --> Path to your AltV.exe
 
-timeout /t 20 REM--> Time in seconds to wait until SC finished patching
+timeout /t 20 
+REM --> Time the social club launcher needs for the patching process (different from Computer to Computer)
 
-xcopy /y "C:\PATH\TO\REDUXFOLDER" "C:\PATH\TO\Grand Theft Auto V" REM--> First Folder: Redux Files, Second Folder: GTA 5 Folder
- 
+xcopy /y /E "C:\PATH\TO\REDUX" "C:\PATH\TO\Grand Theft Auto V" 
+REM --> First path: folder where the Redux files are located, second path: where he should copy it.
+exit
